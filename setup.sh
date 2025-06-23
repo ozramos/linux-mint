@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Packages
-sudo apt install neovim tmux git jq redshift
+sudo apt install neovim tmux git jq redshift ttyd
 
 # Configs
 . ./copyconfigs.sh
