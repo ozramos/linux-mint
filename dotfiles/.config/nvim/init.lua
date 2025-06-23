@@ -9,6 +9,12 @@ vim.opt.expandtab = true
 vim.opt.autoindent = true
 vim.opt.smartindent = true
 
+-- Expands ,t to HHMM
+vim.api.nvim_set_keymap('i', ',t', [[<C-R>=luaeval("os.date('%H%M') .. ' '")<CR>]], { noremap = true, silent = true })
+vim.api.nvim_set_keymap('i', ',d', [[<C-R>=luaeval("os.date('%y%m%d') .. ' '")<CR>]], { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', ',t', [[a<C-R>=luaeval("os.date('%H%M') .. ' '")<CR>]], { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', ',d', [[a<C-R>=luaeval("os.date('%y%m%d') .. ' '")<CR>]], { noremap = true, silent = true })
+
 -- Function to set the colorscheme based on the time of day.
 local function update_colorscheme()
   local hour = tonumber(os.date("%H"))
