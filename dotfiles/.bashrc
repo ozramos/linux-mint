@@ -144,7 +144,7 @@ export HEY="$QRX/hey"
 export OZ="$QRX"
 export ME="$OZ"
 export HISTORY="$QRX/history.md"
-export LINUX="$QRX/linux"
+export LINUX="$QRX/linux-mint"
 export EPIPHANY="$OZ/context/epiphany/*"
 
 # Git related
