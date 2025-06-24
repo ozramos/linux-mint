@@ -1,3 +1,21 @@
+-- Standard settings
+vim.opt.relativenumber = true
+vim.opt.wrap = true
+vim.opt.linebreak = true
+vim.opt.list = false
+vim.opt.autoread = true
+vim.opt.updatetime = 500
+
+-- undo history
+local undodir_path = vim.fn.stdpath("data") .. "/undo"
+vim.opt.undofile = true
+vim.opt.undodir = undodir_path
+vim.opt.undolevels = 1000
+vim.opt.undoreload = 10000
+if vim.fn.isdirectory(undodir_path) == 0 then
+  vim.fn.mkdir(undodir_path, "p")
+end
+
 -- Map jj to exit Insert mode
 vim.keymap.set('i', 'jj', '<Esc>', { noremap = true })
 
@@ -58,3 +76,37 @@ vim.opt.rtp:prepend(lazypath)
 
 -- Setup lazy.nvim and load plugins from lua/plugins/
 require("lazy").setup("plugins")
+
+-- Mappings
+local mappings = {
+  n = {
+    ['<leader>t'] = { 'strftime("%H%M")<CR>P', 'Insert current time (HHMM)' },
+    ['<leader>hr'] = { 'o<CR><CR><CR><Esc>40i=<Esc>o<CR><CR><CR><Esc>', 'Insert horizontal rule' },
+    [',sum'] = { ':%w !hey \'summarize the current buffer\' --more<CR>', 'Summarize buffer with hey' },
+    [',next'] = { ':%w !hey \'what should i work on next?\' --more<CR>', 'Ask hey what to work on next' },
+    [',save'] = { ':!cd ~/oz/;clear;save<CR>', 'Save with custom script' },
+    [',hey'] = { ':%w !hey --more --prompt \'<CR>', 'Prompt hey with current buffer' },
+    ['<Find>'] = { '<Home>', 'Move to beginning of line (Normal)' },
+    ['<Select>'] = { '<End>', 'Move to end of line (Normal)' },
+  },
+  i = {
+    ['jj'] = { '<Esc>', 'Exit insert mode' },
+    ['<Find>'] = { '<C-o><Home>', 'Move to beginning of line (Insert)' },
+    ['<Select>'] = { '<C-o><End>', 'Move to end of line (Insert)' },
+    ['<leader>t'] = { '<C-R>=strftime("%H%M")<CR>', 'Insert current time (HHMM) in insert mode' },
+    [',['] = { '[ ] ', 'Insert checkbox with space' },
+  },
+  v = {
+    ['<Find>'] = { '<Home>', 'Move to beginning of line (Visual)' },
+    ['<Select>'] = { '<End>', 'Move to end of line (Visual)' },
+  }
+}
+
+for mode, mode_mappings in pairs(mappings) do
+  for lhs, rhs_and_desc in pairs(mode_mappings) do
+    local rhs = rhs_and_desc[1]
+    local desc = rhs_and_desc[2]
+    local opts = { noremap = true, silent = true, desc = desc }
+    vim.keymap.set(mode, lhs, rhs, opts)
+  end
+end
