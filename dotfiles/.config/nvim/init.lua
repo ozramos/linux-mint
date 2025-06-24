@@ -5,6 +5,7 @@ vim.opt.linebreak = true
 vim.opt.list = false
 vim.opt.autoread = true
 vim.opt.updatetime = 500
+vim.opt.clipboard = "unnamedplus" -- Use system clipboard for yank/paste
 
 -- undo history
 local undodir_path = vim.fn.stdpath("data") .. "/undo"
@@ -16,9 +17,6 @@ if vim.fn.isdirectory(undodir_path) == 0 then
   vim.fn.mkdir(undodir_path, "p")
 end
 
--- Map jj to exit Insert mode
-vim.keymap.set('i', 'jj', '<Esc>', { noremap = true })
-
 -- 2 tab spaces
 vim.opt.tabstop = 2
 vim.opt.softtabstop = 2
@@ -26,12 +24,6 @@ vim.opt.shiftwidth = 2
 vim.opt.expandtab = true
 vim.opt.autoindent = true
 vim.opt.smartindent = true
-
--- Expands ,t to HHMM
-vim.api.nvim_set_keymap('i', ',t', [[<C-R>=luaeval("os.date('%H%M') .. ' '")<CR>]], { noremap = true, silent = true })
-vim.api.nvim_set_keymap('i', ',d', [[<C-R>=luaeval("os.date('%y%m%d') .. ' '")<CR>]], { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', ',t', [[a<C-R>=luaeval("os.date('%H%M') .. ' '")<CR>]], { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', ',d', [[a<C-R>=luaeval("os.date('%y%m%d') .. ' '")<CR>]], { noremap = true, silent = true })
 
 -- Function to set the colorscheme based on the time of day.
 local function update_colorscheme()
@@ -82,6 +74,8 @@ local mappings = {
   n = {
     ['<leader>t'] = { 'strftime("%H%M")<CR>P', 'Insert current time (HHMM)' },
     ['<leader>hr'] = { 'o<CR><CR><CR><Esc>40i=<Esc>o<CR><CR><CR><Esc>', 'Insert horizontal rule' },
+    [',t'] = { 'a<C-R>=luaeval("os.date(\'%H%M\') .. \' \'")<CR>', "Insert current time (HHMM)" },
+    [',d'] = { 'a<C-R>=luaeval("os.date(\'%y%m%d\') .. \' \'")<CR>', "Insert current date (YYMMDD)" },
     [',sum'] = { ':%w !hey \'summarize the current buffer\' --more<CR>', 'Summarize buffer with hey' },
     [',next'] = { ':%w !hey \'what should i work on next?\' --more<CR>', 'Ask hey what to work on next' },
     [',save'] = { ':!cd ~/oz/;clear;save<CR>', 'Save with custom script' },
@@ -94,6 +88,8 @@ local mappings = {
     ['<Find>'] = { '<C-o><Home>', 'Move to beginning of line (Insert)' },
     ['<Select>'] = { '<C-o><End>', 'Move to end of line (Insert)' },
     ['<leader>t'] = { '<C-R>=strftime("%H%M")<CR>', 'Insert current time (HHMM) in insert mode' },
+    [',t'] = { '<C-R>=luaeval("os.date(\'%H%M\') .. \' \'")<CR>', "Insert current time (HHMM)" },
+    [',d'] = { '<C-R>=luaeval("os.date(\'%y%m%d\') .. \' \'")<CR>', "Insert current date (YYMMDD)" },
     [',['] = { '[ ] ', 'Insert checkbox with space' },
   },
   v = {
