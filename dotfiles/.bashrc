@@ -217,3 +217,7 @@ export BG_BRIGHT_WHITE='\033[107m'
 
 # Reset color
 export RESET='\033[0m'
+
+# devtools
+source ~/emsdk/emsdk_env.sh
+export PATH="$HOME/bin:$PATH"
