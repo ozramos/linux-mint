@@ -2,7 +2,7 @@
 DIR="$(cd "$(dirname "$0")" && pwd)"
 
 # Packages
-sudo apt install tmux git jq redshift ttyd xsel
+sudo apt install tmux git jq redshift ttyd xsel qemu-system-x86
 
 # Configs
 . "$DIR/copyconfigs.sh"
